@@ -1,0 +1,37 @@
+$dark: #0d1117;
+$fontColor: rgb(201, 209, 217);
+.wrapper {
+  display: grid;
+  grid-template-areas:
+    '. . navigation .'
+    '. sidebar main .';
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 1fr 320px minmax(320px, 915px) 1fr;
+  min-height: 100vh;
+  background-color: $dark;
+  color: $fontColor;
+  padding: 0 15px;
+  gap: 15px;
+  & > * {
+    color: rgb(139, 148, 158);
+  }
+}
+.nav {
+  grid-area: navigation;
+}
+.sidebar {
+  grid-area: sidebar;
+}
+.main {
+  grid-area: main;
+}
+@media (max-width: 768px) {
+  .wrapper {
+    grid-template-areas:
+      'navigation'
+      'sidebar'
+      'main';
+    grid-template-rows: auto auto 1fr;
+    grid-template-columns: 1fr;
+  }
+}
