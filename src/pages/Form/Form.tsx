@@ -3,12 +3,13 @@ import { Slide, toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { ReactComponent as Logo } from './logo.svg'
 import styles from './Form.module.scss'
-import { url } from '../../api'
 import { useNavigate } from 'react-router-dom'
-import { IUser } from '../../types'
+import { fetchUserByLogin } from '../../redux/user/asyncActions'
+import { useAppDispatch } from '../../redux/store'
 
 const Form: React.FunctionComponent = (): JSX.Element => {
   const inputRef = useRef<HTMLInputElement>(null)
+  const dispatch = useAppDispatch()
   const [username, setUsername] = useState<string | undefined>('')
   const navigate = useNavigate()
   const findUser = async (
@@ -17,13 +18,9 @@ const Form: React.FunctionComponent = (): JSX.Element => {
     event.preventDefault()
     if (username?.trim()) {
       let userLogin = username.trim()
-      url
-        .get(`/users/${userLogin}`)
-        .then(res => {
-          const state: IUser = res.data
-          navigate(`profile/${userLogin}`, { state })
-        })
-        .catch(err => toast(`User ${userLogin} doesn't exist`))
+      //   .catch(err => toast(`User ${userLogin} doesn't exist`))
+      dispatch(fetchUserByLogin(userLogin))
+      navigate(`profile/${userLogin}`)
     }
   }
   const setValue = (): void => {

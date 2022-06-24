@@ -6,7 +6,7 @@ import { IMainProps } from './Main.props'
 import styles from './Main.module.scss'
 import Loader from '../Loader/Loader'
 import { toast } from 'react-toastify'
-import { Route, Routes } from 'react-router-dom'
+
 const Main = ({ user, className }: IMainProps): JSX.Element => {
   const [repos, setRepos] = useState<IRepo[]>([])
   const [isLoading, setIsLoading] = useState(true)

@@ -1,16 +1,24 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import { Main, Navigation, Sidebar } from '../../components'
-import { ILocationUser } from '../../types'
+import { selectUser } from '../../redux/user/selector'
+import { ILocationUser, IUser } from '../../types'
 import styles from './Profile.module.scss'
 const Profile: React.FunctionComponent = (): JSX.Element => {
-  const location = useLocation()
-  const { state }: ILocationUser = useLocation()
+  const u = useSelector(selectUser)
+  console.log(u)
   return (
     <div className={styles.wrapper}>
       <Navigation className={styles.nav} />
-      <Sidebar user={state} className={styles.sidebar} />
-      <Main user={state} className={styles.main} />
+      {u.isLoading ? (
+        <>LOADING</>
+      ) : (
+        <>
+          <Sidebar user={u.user} className={styles.sidebar} />
+          <Main user={u.user} className={styles.main} />
+        </>
+      )}
     </div>
   )
 }
