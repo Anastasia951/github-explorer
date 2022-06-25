@@ -1,36 +1,31 @@
-import React, { useEffect, useState } from 'react'
-import { url } from '../../api'
+import React, { useEffect } from 'react'
 import { IRepo } from '../../types'
 import Repo from '../Repo/Repo'
 import { IMainProps } from './Main.props'
 import styles from './Main.module.scss'
 import Loader from '../Loader/Loader'
 import { toast } from 'react-toastify'
+import { useAppDispatch } from '../../redux/store'
+import { fetchReposByURL } from '../../redux/repo/asyncActions'
+import { useSelector } from 'react-redux'
+import { selectRepos } from '../../redux/repo/selector'
 
 const Main = ({ user, className }: IMainProps): JSX.Element => {
-  const [repos, setRepos] = useState<IRepo[]>([])
-  const [isLoading, setIsLoading] = useState(true)
+  const dispatch = useAppDispatch()
+  const r = useSelector(selectRepos)
   useEffect(() => {
-    url
-      .get(`${user.repos_url}`)
-      .then(res => {
-        setRepos(res.data)
-      })
-      .catch(err => {
-        toast('Error. Try again later')
-      })
-      .finally(() => {
-        setIsLoading(false)
-      })
+    dispatch(fetchReposByURL(user.repos_url)).catch(() => {
+      toast('Something went wrong')
+    })
   }, [])
   return (
     <div className={styles.repos + ' ' + className}>
-      {isLoading ? (
+      {r.isLoading ? (
         new Array(5).fill('').map((_, key) => <Loader key={key} />)
-      ) : repos.length === 0 ? (
+      ) : r.repos.length === 0 ? (
         <>No Repositories yet</>
       ) : (
-        repos.map((repo: IRepo) => <Repo key={repo.id} repo={repo} />)
+        r.repos.map((repo: IRepo) => <Repo key={repo.id} repo={repo} />)
       )}
     </div>
   )

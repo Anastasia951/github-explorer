@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { useDispatch } from 'react-redux'
 import user from './user/slice'
+import repos from './repo/slice'
 export const store = configureStore({
   reducer: {
     user,
+    repos,
   },
 })
 

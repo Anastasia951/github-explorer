@@ -6,11 +6,14 @@ import styles from './Form.module.scss'
 import { useNavigate } from 'react-router-dom'
 import { fetchUserByLogin } from '../../redux/user/asyncActions'
 import { useAppDispatch } from '../../redux/store'
-
+import { IUser } from '../../types'
+interface IData {
+  payload: IUser
+}
 const Form: React.FunctionComponent = (): JSX.Element => {
   const inputRef = useRef<HTMLInputElement>(null)
   const dispatch = useAppDispatch()
-  const [username, setUsername] = useState<string | undefined>('')
+  const [username, setUsername] = useState<string>('')
   const navigate = useNavigate()
   const findUser = async (
     event: React.FormEvent<HTMLInputElement>
@@ -18,9 +21,17 @@ const Form: React.FunctionComponent = (): JSX.Element => {
     event.preventDefault()
     if (username?.trim()) {
       let userLogin = username.trim()
-      //   .catch(err => toast(`User ${userLogin} doesn't exist`))
       dispatch(fetchUserByLogin(userLogin))
-      navigate(`profile/${userLogin}`)
+        .then((data: IData) => {
+          if (data.payload) {
+            navigate(`/profile/${data.payload.login}`)
+          } else {
+            throw new Error()
+          }
+        })
+        .catch(() => {
+          toast(`This user doesn't exist`)
+        })
     }
   }
   const setValue = (): void => {

@@ -1,39 +1,39 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { IUser } from '../../types'
-import { fetchUserByLogin } from './asyncActions'
+import { IRepo } from '../../types'
+import { fetchReposByURL } from './asyncActions'
 
 interface IState {
-  user: IUser
+  repos: IRepo[]
   isError: boolean
   isLoading: boolean
 }
 const initialState: IState = {
-  user: {},
+  repos: [],
   isError: false,
   isLoading: false,
 }
 
 const userSlice = createSlice({
-  name: 'user',
+  name: 'repo',
   initialState,
   reducers: {},
   extraReducers: builder => {
-    builder.addCase(fetchUserByLogin.pending, state => {
+    builder.addCase(fetchReposByURL.pending, state => {
       state.isLoading = true
-      state.user = {}
+      state.repos = []
     })
     builder.addCase(
-      fetchUserByLogin.fulfilled,
-      (state, action: PayloadAction<IUser>) => {
+      fetchReposByURL.fulfilled,
+      (state, action: PayloadAction<IRepo[]>) => {
         state.isLoading = false
         state.isError = false
-        state.user = action.payload
+        state.repos = action.payload
       }
     )
-    builder.addCase(fetchUserByLogin.rejected, state => {
+    builder.addCase(fetchReposByURL.rejected, state => {
       state.isLoading = false
       state.isError = true
-      state.user = {}
+      state.repos = []
     })
   },
 })
