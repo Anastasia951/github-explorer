@@ -9,6 +9,7 @@ import { useAppDispatch } from '../../redux/store'
 import { fetchReposByURL } from '../../redux/repo/asyncActions'
 import { useSelector } from 'react-redux'
 import { selectRepos } from '../../redux/repo/selector'
+import { Outlet, Route, Routes } from 'react-router-dom'
 
 const Main = ({ user, className }: IMainProps): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -20,13 +21,14 @@ const Main = ({ user, className }: IMainProps): JSX.Element => {
   }, [])
   return (
     <div className={styles.repos + ' ' + className}>
-      {r.isLoading ? (
+      {/* {r.isLoading ? (
         new Array(5).fill('').map((_, key) => <Loader key={key} />)
       ) : r.repos.length === 0 ? (
         <>No Repositories yet</>
       ) : (
         r.repos.map((repo: IRepo) => <Repo key={repo.id} repo={repo} />)
-      )}
+      )} */}
+      <Outlet />
     </div>
   )
 }

@@ -24,7 +24,7 @@ const Form: React.FunctionComponent = (): JSX.Element => {
       dispatch(fetchUserByLogin(userLogin))
         .then((data: IData) => {
           if (data.payload) {
-            navigate(`/profile/${data.payload.login}`)
+            navigate(`/${data.payload.login}/repos`)
           } else {
             throw new Error()
           }
