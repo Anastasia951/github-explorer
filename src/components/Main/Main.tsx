@@ -1,34 +1,32 @@
 import React, { useEffect } from 'react'
-import { IRepo } from '../../types'
-import Repo from '../Repo/Repo'
 import { IMainProps } from './Main.props'
 import styles from './Main.module.scss'
-import Loader from '../Loader/Loader'
 import { toast } from 'react-toastify'
 import { useAppDispatch } from '../../redux/store'
 import { fetchReposByURL } from '../../redux/repo/asyncActions'
 import { useSelector } from 'react-redux'
 import { selectRepos } from '../../redux/repo/selector'
-import { Outlet, Route, Routes } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
+import { fetchFollowersByUrl } from '../../redux/followers/asyncActions'
+import { selectFollowers } from '../../redux/followers/selector'
 
 const Main = ({ user, className }: IMainProps): JSX.Element => {
   const dispatch = useAppDispatch()
   const r = useSelector(selectRepos)
+  const f = useSelector(selectFollowers)
   useEffect(() => {
     dispatch(fetchReposByURL(user.repos_url)).catch(() => {
       toast('Something went wrong')
     })
   }, [])
+  useEffect(() => {
+    dispatch(fetchFollowersByUrl(user.followers_url)).catch(() => {
+      toast('Something went wrong')
+    })
+  }, [])
   return (
     <div className={styles.repos + ' ' + className}>
-      {/* {r.isLoading ? (
-        new Array(5).fill('').map((_, key) => <Loader key={key} />)
-      ) : r.repos.length === 0 ? (
-        <>No Repositories yet</>
-      ) : (
-        r.repos.map((repo: IRepo) => <Repo key={repo.id} repo={repo} />)
-      )} */}
-      <Outlet />
+      <Outlet context={{ r, f }} />
     </div>
   )
 }

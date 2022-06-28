@@ -5,6 +5,7 @@ export interface IUser {
   followers?: number
   following?: number
   repos_url?: string
+  followers_url?: string
 }
 export interface IRepo {
   name: string
@@ -12,4 +13,10 @@ export interface IRepo {
   description?: string
   language: string
   repo: any
+}
+export interface IFollowers {
+  login: string
+  id: number | string
+  url: string
+  avatar_url: string
 }

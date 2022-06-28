@@ -8,6 +8,11 @@ const Navigation = ({ className, ...props }: INavigationProps) => {
     <div {...props} className={cn(className, styles.nav)}>
       <ul className={styles.list}>
         <li className={styles.listItem}>
+          <Link className={styles.link} to={`repos`}>
+            Repositories
+          </Link>
+        </li>
+        <li className={styles.listItem}>
           <Link className={styles.link} to={`followers`}>
             Followers
           </Link>

@@ -1,0 +1,28 @@
+$link: #58a6ff;
+.repo {
+  border: 1px solid rgba(201, 209, 217, 0.5);
+  border-radius: 5px;
+  padding: 15px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto;
+  gap: 5px;
+}
+.title {
+  color: $link;
+  font-size: (14/16) + rem;
+  display: flex;
+  align-items: flex-start;
+  column-gap: 5px;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.description {
+  color: rgb(139, 148, 158);
+  font-size: 0.75rem;
+}
+.language {
+  font-size: (12/16) + rem;
+}

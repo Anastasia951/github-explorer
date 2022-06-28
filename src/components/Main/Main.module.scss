@@ -1,9 +1,0 @@
-.repos {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-auto-rows: min-content;
-  gap: 15px;
-  @media (max-width: 425px) {
-    grid-template-columns: 1fr;
-  }
-}

@@ -2,12 +2,12 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IRepo } from '../../types'
 import { fetchReposByURL } from './asyncActions'
 
-interface IState {
+export interface IReposState {
   repos: IRepo[]
   isError: boolean
   isLoading: boolean
 }
-const initialState: IState = {
+const initialState: IReposState = {
   repos: [],
   isError: false,
   isLoading: false,
