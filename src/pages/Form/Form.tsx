@@ -23,6 +23,7 @@ const Form: React.FunctionComponent = (): JSX.Element => {
       let userLogin = username.trim()
       dispatch(fetchUserByLogin(userLogin))
         .then((data: IData) => {
+          console.log(data)
           if (data.payload) {
             navigate(`/${data.payload.login}/repos`)
           } else {

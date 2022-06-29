@@ -15,15 +15,19 @@ const Main = ({ user, className }: IMainProps): JSX.Element => {
   const r = useSelector(selectRepos)
   const f = useSelector(selectFollowers)
   useEffect(() => {
-    dispatch(fetchReposByURL(user.repos_url)).catch(() => {
-      toast('Something went wrong')
-    })
-  }, [])
+    if (!user.login) {
+      dispatch(fetchReposByURL(user.repos_url)).catch(() => {
+        toast('Something went wrong')
+      })
+    }
+  }, [user.login])
   useEffect(() => {
-    dispatch(fetchFollowersByUrl(user.followers_url)).catch(() => {
-      toast('Something went wrong')
-    })
-  }, [])
+    if (!user.login) {
+      dispatch(fetchFollowersByUrl(user.followers_url)).catch(() => {
+        toast('Something went wrong')
+      })
+    }
+  }, [user.login])
   return (
     <div className={styles.repos + ' ' + className}>
       <Outlet context={{ r, f }} />

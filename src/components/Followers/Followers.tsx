@@ -23,7 +23,7 @@ const Followers = ({ className }: FollowerProps): JSX.Element => {
       {f.isLoading ? (
         new Array(5).fill('').map((_, key) => <Loader key={key} />)
       ) : f.followers.length === 0 ? (
-        <>No Repositories yet</>
+        <>This user doesn't have followers</>
       ) : (
         f.followers.map((follower: IFollowers) => (
           <Follower key={follower.id} follower={follower} />
